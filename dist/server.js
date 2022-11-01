@@ -1,5 +1,5 @@
-import express from 'express';
 import dotenv from 'dotenv';
+import express from 'express';
 dotenv.config({ path: '/ChatApp/config.env' });
 const app = express();
 const port = process.env.PORT;
