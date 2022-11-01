@@ -1,12 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react'
+import Homepage from './Components/Homepage';
+import ChatApp from './Components/ChatApp';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
-  );
+    <ChakraProvider>
+      <Homepage />
+      <ChatApp/>
+    </ChakraProvider>
+  )
 }
-
 export default App;

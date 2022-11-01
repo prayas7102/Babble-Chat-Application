@@ -1,10 +1,12 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import {chats} from "./Data/Chat";
+import cors from "cors";
+import {Chats} from "./Data/Chat.cjs"
 
 dotenv.config({ path: '/ChatApp/config.env' });
 
 const app = express();
+app.use(cors())
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
@@ -12,8 +14,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/chat/api', (req, res) => {
-  console.log(chats)
-  res.send(chats);
+  // console.log(Chats)
+  res.send(Chats);
 });
 
 app.listen(port, () => {
