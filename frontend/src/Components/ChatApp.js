@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
 
 const ChatApp = () => {
-  let data;
-  const fetchChat = async () => {
-    data = await axios.get("/chat/api"); 
-    // http://127.0.0.1:5000  http://localhost:5000
-    console.log(data)
-  }
+  const [first, setfirst] = useState([]);
+  console.log(first)
+
   useEffect(() => {
-    fetchChat();
-  }, data);
+    axios.get("/chat/api")
+    .then((res)=>{setfirst(res)})
+  }, []);
 
   return (
-    <div>{data ? "data" : ""}</div>
+    <div>l</div>
   )
 }
 
-export default ChatApp
+export default ChatApp;
