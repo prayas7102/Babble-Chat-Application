@@ -1,13 +1,19 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
+import {chats} from "./Data/Chat";
 
-dotenv.config({path:'/ChatApp/config.env'});
+dotenv.config({ path: '/ChatApp/config.env' });
 
 const app: Express = express();
 const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+  res.send(chats);
+});
+
+app.get('/chat/api', (req: Request, res: Response) => {
+  console.log(chats)
+  res.send(chats);
 });
 
 app.listen(port, () => {
