@@ -6,12 +6,14 @@ const ChatApp = () => {
   console.log(first)
 
   useEffect(() => {
-    axios.get("/chat/api")
-    .then((res)=>{setfirst(res)})
+    fetch("/chat/api")
+    .then((res)=>{
+      setfirst(res)
+    })
   }, []);
-
+// {first[0].users[0].name}
   return (
-    <div>l</div>
+    <div>mm</div>
   )
 }
 
