@@ -6,7 +6,7 @@ const ChatApp = () => {
   console.log(first)
 
   useEffect(() => {
-    fetch("/chat/api")
+    axios.get("/chat/api")
     .then((res)=>{
       setfirst(res)
     })

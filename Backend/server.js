@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/chat/api', (req, res) => {
-  // console.log(Chats)
   res.json(Chats);
 });
 
