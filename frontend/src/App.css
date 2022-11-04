@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
+.App {
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  background-position: center;
+  background-size: cover;
+  background-image: url("https://plus.unsplash.com/premium_photo-1663051303500-c85bef3f05f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+}
