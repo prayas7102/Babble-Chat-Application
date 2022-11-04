@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 
 const ChatApp = () => {
-  const [first, setfirst] = useState([]);
-  console.log(first)
+  const [first, setfirst] = useState('');
+  // console.log(first)
 
   useEffect(() => {
-    axios.get("/chat/api")
+    axios.get("http://127.0.0.1:5000/chat/api")
     .then((res)=>{
-      setfirst(res)
+      setfirst(res.data[0].chatName)
     })
   }, []);
-// {first[0].users[0].name}
+
   return (
-    <div>mm</div>
+    <div>{first}</div>
   )
 }
 

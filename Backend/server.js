@@ -16,6 +16,9 @@ const port = process.env.PORT;
 
 // app.options('*', cors());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => {
   res.send('ch');
 });
