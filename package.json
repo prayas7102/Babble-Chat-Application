@@ -12,7 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/prayas7102/MERN-Socket-ChatApp.git"
   },
-  "type": "module",
   "author": "prayas",
   "license": "ISC",
   "bugs": {

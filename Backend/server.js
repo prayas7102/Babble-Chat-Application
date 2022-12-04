@@ -1,23 +1,18 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import cors from "cors";
-import {Chats} from "./Data/Chat.cjs"
+const dotenv = require('dotenv');
+const express = require('express');
+const cors = require('cors');
+const { Chats } = require("./Data/Chat.cjs");
+const { connectDB } = require('./config/db');
 
 dotenv.config({ path: '/ChatApp/config.env' });
+connectDB();
 
 const app = express();
-app.use(cors());
 const port = process.env.PORT;
-
-// var corsOptions = {
-//   origin: 'http://127.0.0.1:5000',
-//   optionsSuccessStatus: 200
-// }
-
-// app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('ch');
