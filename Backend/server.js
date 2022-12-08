@@ -4,6 +4,7 @@ const cors = require('cors');
 const UserRouter = require('./routes/UserRoutes');
 const { Chats } = require("./Data/Chat.cjs");
 const { connectDB } = require('./config/db');
+const { notFound, errorHandler } = require('./middleware/Error')
 
 dotenv.config({ path: '/ChatApp/config.env' });
 connectDB();
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/api/user', UserRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.get('/', (req, res) => {
   res.send('ch');
