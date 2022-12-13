@@ -11,15 +11,16 @@ const Signup = () => {
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
-  const [password, setPassword] = useState();
-  const [pic, setPic] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [pic, setPic] = useState("");
   const [picLoading, setPicLoading] = useState(false);
 
   const submitHandler = async () => {
     setPicLoading(true);
+
     if (!name || !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
@@ -43,22 +44,32 @@ const Signup = () => {
     }
 
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/user",
-        {
-          name,
-          email,
-          password,
-          pic,
-        },
-        config
-      );
-      console.log(data);
+      // const config = {
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      // };
+      const userData = {
+        name: name,
+        email: email,
+        password: password,
+        pic: pic,
+      }
+      // const { data } = await axios.post(
+      //   "http://localhost:5000/api/user/",
+      //   data: {
+      //     userData
+      //   },
+      //   config
+      // )
+      console.log(userData)
+      await axios.postForm('http://localhost:5000/api/user/', userData,
+        { headers: { 'content-type': 'application/x-www-form-urlencoded' } }
+      )
+        .then((res) => {
+          console.log(res);
+        })
+
       toast({
         title: "Registration Successful",
         status: "success",
@@ -66,13 +77,13 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(userData));
       setPicLoading(false);
       // history.push("/chats");
     } catch (error) {
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,

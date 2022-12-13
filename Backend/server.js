@@ -13,7 +13,8 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/api/user', UserRouter);
@@ -21,9 +22,9 @@ app.use('/api/user', UserRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-app.get('/', (req, res) => {
-  res.send('ch');
-});
+// app.post('/api/user', (req, res) => {
+//   console.log('api/user')
+// });
 
 app.get('/chat/api', (req, res) => {
   res.json(Chats);
