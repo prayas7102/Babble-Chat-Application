@@ -8,6 +8,7 @@ const ChatApp = () => {
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/chat/api")
     .then((res)=>{
+      console.log(res.data[0].chatName)
       setfirst(res.data[0].chatName)
     })
   }, []);
