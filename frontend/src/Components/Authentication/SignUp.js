@@ -44,27 +44,13 @@ const Signup = () => {
     }
 
     try {
-      // const config = {
-      //   headers: {
-      //     "Content-type": "application/json",
-      //   },
-      // };
       const userData = {
         name: name,
         email: email,
         password: password,
         pic: pic,
       }
-      // const { data } = await axios.post(
-      //   "http://localhost:5000/api/user/",
-      //   data: {
-      //     userData
-      //   },
-      //   config
-      // )
-      console.log(userData)
-      await axios.postForm('http://localhost:5000/api/user/', userData,
-        { headers: { 'content-type': 'application/x-www-form-urlencoded' } }
+      await axios.post('http://localhost:5000/api/user/', userData
       )
         .then((res) => {
           console.log(res);

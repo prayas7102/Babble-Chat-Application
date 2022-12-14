@@ -3,8 +3,9 @@ const User = require('../Models/UserModel')
 
 const registerUser = async (req, res) => {
 
-    const { name, email, password, pic } = JSON.stringify(req.body);
-    console.log(req.body)
+    // console.log((req.body),'req.body recieved')
+
+    const { name, email, password, pic } = (req.body);
     if (!name || !email || !password) {
         res.status(400);
         throw new Error('Enter all fields');
