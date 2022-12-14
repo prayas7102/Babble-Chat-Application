@@ -28,7 +28,36 @@ const Login = () => {
       setLoading(false);
       return;
     }
+    
+    try {
+      const { data } = await axios.post(
+        "/api/user/login", { email, password },
+      );
+
+      toast({
+        title: "Login Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } 
+
+    catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
   }
+
   return (
     <VStack spacing="10px">
       <FormControl id="email" isRequired>

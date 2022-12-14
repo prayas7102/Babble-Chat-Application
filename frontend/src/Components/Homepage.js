@@ -2,12 +2,11 @@ import React from 'react'
 import { Tab, Tabs, TabPanels, TabPanel, TabList, Container, Box, Text } from '@chakra-ui/react'
 import Login from "./Authentication/Login"
 import SignUp from "./Authentication/SignUp"
-import ChatApp from './ChatApp'
+// import ChatApp from './ChatApp'
 
 const Homepage = () => {
   return (
     <div>
-      <ChatApp/>
       <Container maxW="xl" centerContent>
         <Box
           d="flex"

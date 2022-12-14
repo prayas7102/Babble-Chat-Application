@@ -1,16 +1,19 @@
+import axios from "axios";
+import { useState, useEffect } from "react"; 
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  let navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
+  const [next, setNext] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
@@ -19,6 +22,7 @@ const Signup = () => {
   const [picLoading, setPicLoading] = useState(false);
 
   const submitHandler = async () => {
+
     setPicLoading(true);
 
     if (!name || !email || !password || !confirmpassword) {
@@ -32,6 +36,7 @@ const Signup = () => {
       setPicLoading(false);
       return;
     }
+    
     if (password !== confirmpassword) {
       toast({
         title: "Passwords Do Not Match",
@@ -66,8 +71,9 @@ const Signup = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(userData));
       setPicLoading(false);
-      // history.push("/chats");
-    } catch (error) {
+      setNext(true);
+    }
+    catch (error) {
       toast({
         title: "Error Occured!",
         description: error.message,
@@ -124,6 +130,10 @@ const Signup = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    if (next) { navigate('/chat') }
+  }, [next])
 
   return (
     <VStack spacing="5px">

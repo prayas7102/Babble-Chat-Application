@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios"
+import React, { useEffect } from 'react'
+// import axios from "axios"
 
 const ChatApp = () => {
   // const [first, setfirst] = useState('');
@@ -14,7 +14,7 @@ const ChatApp = () => {
   }, []);
 
   return (
-    <div></div>
+    <div>nunu</div>
   )
 }
 
