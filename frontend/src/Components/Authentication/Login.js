@@ -6,8 +6,10 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  let navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
@@ -43,6 +45,7 @@ const Login = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      navigate('/chat');
     } 
 
     catch (error) {

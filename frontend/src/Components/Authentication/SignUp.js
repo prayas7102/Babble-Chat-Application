@@ -13,7 +13,6 @@ const Signup = () => {
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
-  const [next, setNext] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
@@ -22,7 +21,6 @@ const Signup = () => {
   const [picLoading, setPicLoading] = useState(false);
 
   const submitHandler = async () => {
-
     setPicLoading(true);
 
     if (!name || !email || !password || !confirmpassword) {
@@ -56,12 +54,7 @@ const Signup = () => {
         password: password,
         pic: pic,
       }
-      await axios.post('http://localhost:5000/api/user/', userData
-      )
-        .then((res) => {
-          console.log(res);
-        })
-
+      const {data}=await axios.post('http://localhost:5000/api/user/', userData)
       toast({
         title: "Registration Successful",
         status: "success",
@@ -69,10 +62,11 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(userData));
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      navigate('/chat');
       setPicLoading(false);
-      setNext(true);
     }
+
     catch (error) {
       toast({
         title: "Error Occured!",
@@ -130,10 +124,6 @@ const Signup = () => {
       return;
     }
   };
-
-  useEffect(() => {
-    if (next) { navigate('/chat') }
-  }, [next])
 
   return (
     <VStack spacing="5px">
