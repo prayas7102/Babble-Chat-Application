@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabPanels, TabPanel, TabList, Container, Box, Text } from '@chakra-ui/react'
 import Login from "../Components/Authentication/Login"
 import SignUp from "../Components/Authentication/SignUp"
-// import ChatApp from './ChatApp'
 
 const Homepage = () => {
   const [user, setUser] = useState();
