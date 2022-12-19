@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ChatContext = createContext();
+const ChatContext = createContext({});
 
 export const ChatState=()=>{
     return useContext(ChatContext);

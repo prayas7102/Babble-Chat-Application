@@ -1,8 +1,29 @@
 import React, { useState } from 'react';
-import { Box } from '@chakra-ui/layout';
-import { Button } from "@chakra-ui/button";
-import { Tooltip } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import { Button, IconButton } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Input } from "@chakra-ui/input";
+import { Box, Text } from "@chakra-ui/layout";
+import { SearchIcon } from '@chakra-ui/icons'
+import {
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/menu";
+import { Flex, Spacer } from '@chakra-ui/react'
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from "@chakra-ui/modal";
+import { Tooltip } from "@chakra-ui/tooltip";
+import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { Avatar } from "@chakra-ui/avatar";
+import { useToast } from "@chakra-ui/toast";
+import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from './ProfileModal';
 
 const SideDrawer = () => {
@@ -14,26 +35,27 @@ const SideDrawer = () => {
 
   return (
     <>
-      <Box d="flex"
-        justifyContent="space-between"
-        alignItems="center"
+      <Box
         bg="white"
         w="100%"
         p="5px 10px"
         borderWidth="5px"
       >
-        <Tooltip label="Search Users" hasArrow placement='bottom-end'>
-          <Button variant="ghost">
-            <SearchIcon />
-            <Text d={{ base: "none", md: "flex" }} px="4">
-              Search Users
-            </Text>
-          </Button>
-        </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
-          Talk-A-Tive
-        </Text>
-        <div>
+        <Flex>
+          <Tooltip label="Search Users" hasArrow placement='bottom-end'>
+            <Button variant="ghost">
+              <SearchIcon />
+              <Text d={{ base: "none", md: "flex" }} px="4">
+                Search Users
+              </Text>
+            </Button>
+          </Tooltip>
+          <Text fontSize="2xl" fontFamily="Work sans">
+            Talk-A-Tive
+          </Text>
+        </Flex>
+
+        {/* <div>
           <Menu>
             <MenuButton p={1}>
               <NotificationBadge
@@ -42,8 +64,8 @@ const SideDrawer = () => {
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-            <MenuList pl={2}>
-              {/* {!notification.length && "No New Messages"}
+            <MenuList pl={2}> */}
+        {/* {!notification.length && "No New Messages"}
             {notification.map((notif) => (
               <MenuItem
                 key={notif._id}
@@ -57,7 +79,7 @@ const SideDrawer = () => {
                   : `New Message from ${getSender(user, notif.chat.users)}`}
               </MenuItem>
             ))} */}
-            </MenuList>
+        {/* </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
@@ -76,10 +98,12 @@ const SideDrawer = () => {
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div>
+        </div> */}
       </Box>
 
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      {/* // onClose={onClose} isOpen={isOpen} */}
+
+      <Drawer placement="left">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
