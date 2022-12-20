@@ -16,6 +16,7 @@ import {
 import { Flex, Spacer } from '@chakra-ui/react';
 
 const ProfileModal = ({ user, children }) => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

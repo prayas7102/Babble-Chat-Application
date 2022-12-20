@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { ChatState } from '../../Context/ChatProvider';
 import { Button, IconButton } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
@@ -30,10 +31,16 @@ import ProfileModal from './ProfileModal';
 const SideDrawer = () => {
 
   const {user} = ChatState();
+  let navigate = useNavigate();
   const [search, useSearch] = useState("");
   const [searchResult, useSearchResult] = useState([]);
   const [loading, useLoading] = useState(false);
   const [loadingChat, useLoadingChat] = useState("");
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate.push("/");
+  };
 
   return (
     <>
@@ -72,7 +79,7 @@ const SideDrawer = () => {
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div> 
