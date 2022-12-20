@@ -6,7 +6,7 @@ import SideDrawer from '../Components/miscellaneous/SideDrawer';
 import MyChats from '../Components/MyChats';
 
 const ChatApp = () => {
-  const user = ChatState();
+  const {user} = ChatState();
 
   return (
     <div style={{ width: "100%" }}>
