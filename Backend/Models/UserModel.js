@@ -21,7 +21,8 @@ userModel.methods.matchPassword = async function (enteredPassword) {
 };
 
 userModel.pre('save', async function (next) {
-    if (!this.isModified) { // if users is regisetring for first time
+    if (!this.isModified) { 
+        // if users is regisetring for first time
         next();
     }
     // 
