@@ -30,7 +30,7 @@ const accessChat = async (req, res) => {
     });
 
     // if chatroom exsists, then isChat length is always == 1
-    
+
     if (isChat.length > 0) {
         res.send(isChat[0]);
     }
@@ -55,9 +55,11 @@ const accessChat = async (req, res) => {
     }
 };
 
+// fetch all chats of logged in user
+
 const fetchChats = (async (req, res) => {
     try {
-        Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
             .populate("latestMessage")
