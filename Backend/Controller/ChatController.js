@@ -1,6 +1,10 @@
 const Chat = require("../Models/ChatModel");
 const User = require("../Models/UserModel");
 
+// only for one-to-one chat. not group chat
+// returns a chatroom b/w two users if exsists.
+// if it does'nt exsist, it creates new chatroom and returns it.
+
 const accessChat = async (req, res) => {
     const { userId } = req.body;
 
@@ -11,6 +15,7 @@ const accessChat = async (req, res) => {
 
     var isChat = await Chat.find({
         isGroupChat: false,
+        // checking a common chatroom b/w two users (logged in user and user with userId id)
         $and: [
             { users: { $elemMatch: { $eq: req.user._id } } },
             { users: { $elemMatch: { $eq: userId } } },
@@ -24,9 +29,12 @@ const accessChat = async (req, res) => {
         select: "name pic email",
     });
 
+    // if chatroom exsists, then isChat length is always == 1
+    
     if (isChat.length > 0) {
         res.send(isChat[0]);
-    } else {
+    }
+    else {
         var chatData = {
             chatName: "sender",
             isGroupChat: false,

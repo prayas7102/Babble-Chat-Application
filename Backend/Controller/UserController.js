@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
 const authUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-
+    // console.log(user)
     if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user._id,
@@ -62,7 +62,8 @@ const allUsers = async (req, res) => {
             { email: { $regex: req.query.search, $options: "i" } }
         ]
     } : {};
-    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    // console.log(req.user)
+    const users = await User.find(keyword).find({ _id: { $ne: req.user.id } });
     res.send(users);
 }
 
