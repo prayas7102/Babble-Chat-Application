@@ -141,17 +141,29 @@ const removeFromGroup = (async (req, res) => {
 
     // check if the requester is admin
 
-    const removed = await Chat.findByIdAndUpdate(
-        chatId,
-        {
-            $pull: { users: userId },
-        },
-        {
-            new: true,
+    let removed;
+    const RequiredChat = await Chat.findById(chatId);
+    if (RequiredChat) {
+        const currentUser = String(req.user._id), groupAdmin = String(RequiredChat.groupAdmin);
+        if (groupAdmin === currentUser) {
+            removed = await Chat.findByIdAndUpdate(
+                chatId,
+                {
+                    $pull: { users: userId },
+                },
+                {
+                    new: true,
+                }
+            )
+                .populate("users", "-password")
+                .populate("groupAdmin", "-password");
         }
-    )
-        .populate("users", "-password")
-        .populate("groupAdmin", "-password");
+        else {
+            res.status(404);
+            console.log(RequiredChat.groupAdmin, req.user._id)
+            throw new Error("You're not group admin !!");
+        }
+    }
 
     if (!removed) {
         res.status(404);
@@ -166,17 +178,29 @@ const addToGroup = (async (req, res) => {
 
     // check if the requester is admin
 
-    const added = await Chat.findByIdAndUpdate(
-        chatId,
-        {
-            $push: { users: userId },
-        },
-        {
-            new: true,
+    let added;
+    const RequiredChat = await Chat.findById(chatId);
+    if (RequiredChat) {
+        const currentUser = String(req.user._id), groupAdmin = String(RequiredChat.groupAdmin);
+        if (groupAdmin === currentUser) {
+            added = await Chat.findByIdAndUpdate(
+                chatId,
+                {
+                    $push: { users: userId },
+                },
+                {
+                    new: true,
+                }
+            )
+                .populate("users", "-password")
+                .populate("groupAdmin", "-password");
         }
-    )
-        .populate("users", "-password")
-        .populate("groupAdmin", "-password");
+        else {
+            res.status(404);
+            console.log(RequiredChat.groupAdmin, req.user._id)
+            throw new Error("You're not group admin !!");
+        }
+    }
 
     if (!added) {
         res.status(404);
