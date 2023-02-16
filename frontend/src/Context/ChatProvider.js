@@ -10,17 +10,17 @@ const ChatProvider = ({ children }) => {
     useEffect(() => {
         const useInfo = JSON.parse(localStorage.getItem('userInfo'));
         setUser(useInfo);
-        if(!useInfo) navigate('/');
+        if (!useInfo) navigate('/');
     }, [navigate]);
 
     return (
-        <ChatContext.Provider value={{user, setUser}}>
+        <ChatContext.Provider value={{ user, setUser }}>
             {children}
         </ChatContext.Provider>
     )
 }
 
-export const ChatState=()=>{
+export const ChatState = () => {
     return useContext(ChatContext);
 }
 

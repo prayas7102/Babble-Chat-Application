@@ -11,15 +11,15 @@ const Homepage = () => {
   useEffect(() => {
     const useInfo = JSON.parse(localStorage.getItem('userInfo'));
     setUser(useInfo);
-    if (!useInfo) navigate('/chat');
+    if (useInfo) navigate('/chat');
   }, [navigate]);
 
   return (
-    <div>
-      <Container maxW="xl" centerContent>
+      <Container maxW="xl" >
         <Box
           d="flex"
           justifyContent="center"
+          textAlign="center"
           p={3}
           bg="white"
           w="100%"
@@ -28,11 +28,11 @@ const Homepage = () => {
           borderWidth="1px"
         >
           <Text fontSize="4xl" fontFamily="Work sans">
-            Talk-A-Tive
+            Babble
           </Text>
         </Box>
         <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
-          <Tabs isFitted variant="soft-rounded">
+          <Tabs isFitted variant="soft-rounded">s
             <TabList mb="1em">
               <Tab>Login</Tab>
               <Tab>Sign Up</Tab>
@@ -48,7 +48,6 @@ const Homepage = () => {
           </Tabs>
         </Box>
       </Container>
-    </div>
   )
 }
 

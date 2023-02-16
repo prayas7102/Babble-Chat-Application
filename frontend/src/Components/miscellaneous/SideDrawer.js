@@ -39,7 +39,7 @@ const SideDrawer = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    navigate.push("/");
+    navigate("/");
   };
 
   return (
@@ -50,7 +50,9 @@ const SideDrawer = () => {
         p="5px 10px"
         borderWidth="5px"
       >
+
         <Flex>
+
           <Tooltip label="Search Users" hasArrow placement='bottom-end'>
             <Button variant="ghost">
               <SearchIcon />
@@ -59,11 +61,15 @@ const SideDrawer = () => {
               </Text>
             </Button>
           </Tooltip>
+
           <Spacer/>
+
           <Text fontSize="2xl" fontFamily="Work sans">
             Talk-A-Tive
           </Text>
+
           <Spacer/>
+
         <div>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -82,8 +88,10 @@ const SideDrawer = () => {
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div> 
+        </div>
+
         </Flex>
+
       </Box>
 
       {/* // onClose={onClose} isOpen={isOpen} */}
