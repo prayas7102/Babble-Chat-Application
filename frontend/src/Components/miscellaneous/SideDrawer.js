@@ -6,6 +6,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { SearchIcon } from '@chakra-ui/icons'
+import axios from "axios";
 import {
   Menu,
   MenuButton,
@@ -26,16 +27,57 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
+import ChatLoading from './ChatLoading';
 import ProfileModal from './ProfileModal';
 
 const SideDrawer = () => {
 
   const {user} = ChatState();
   let navigate = useNavigate();
-  const [search, useSearch] = useState("");
-  const [searchResult, useSearchResult] = useState([]);
-  const [loading, useLoading] = useState(false);
-  const [loadingChat, useLoadingChat] = useState("");
+
+  const toast = useToast()
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingChat, setLoadingChat] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleSearch = async () => {
+    if (!search) {
+      toast({
+        title: "Please Enter something in search",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/user?search=${search}`, config);
+
+      setLoading(false);
+      setSearchResult(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -54,7 +96,7 @@ const SideDrawer = () => {
         <Flex>
 
           <Tooltip label="Search Users" hasArrow placement='bottom-end'>
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={onOpen}>
               <SearchIcon />
               <Text d={{ base: "none", md: "flex" }} px="4">
                 Search Users
@@ -94,13 +136,12 @@ const SideDrawer = () => {
 
       </Box>
 
-      {/* // onClose={onClose} isOpen={isOpen} */}
-
-      <Drawer placement="left">
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
-          {/* <DrawerBody>
+          <DrawerBody>
+
             <Box d="flex" pb={2}>
               <Input
                 placeholder="Search by name or email"
@@ -110,6 +151,7 @@ const SideDrawer = () => {
               />
               <Button onClick={handleSearch}>Go</Button>
             </Box>
+
             {loading ? (
               <ChatLoading />
             ) : (
@@ -121,8 +163,10 @@ const SideDrawer = () => {
                 />
               ))
             )}
+
             {loadingChat && <Spinner ml="auto" d="flex" />}
-          </DrawerBody> */}
+            
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>

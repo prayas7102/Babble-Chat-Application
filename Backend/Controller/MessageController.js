@@ -2,6 +2,7 @@ const Message = require("../Models/MessageModel");
 const User = require("../Models/UserModel");
 const Chat = require("../Models/ChatModel");
 
+// getting all messages in a chat room by chat room's id
 const allMessages = (async (req, res) => {
   try {
     const messages = await Message.find({ chat: req.params.chatId })

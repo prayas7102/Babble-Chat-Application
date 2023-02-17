@@ -77,6 +77,8 @@ const fetchChats = (async (req, res) => {
     }
 });
 
+// creating new group chat room
+
 const createGroupChat = (async (req, res) => {
     if (!req.body.users || !req.body.name) {
         return res.status(400).send({ message: "Please Fill all the feilds" });
