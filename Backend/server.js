@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const UserRouter = require('./routes/UserRoutes');
 const ChatRoutes = require('./routes/ChatRoutes');
+const MessageRoutes = require('./routes/MessageRoutes');
 const { Chats } = require("./Data/Chat.cjs");
 const { connectDB } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/Error');
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/api/user', UserRouter);
 app.use('/api/chats', ChatRoutes);
+app.use('/api/message', MessageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
