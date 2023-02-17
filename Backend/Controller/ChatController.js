@@ -55,7 +55,7 @@ const accessChat = async (req, res) => {
     }
 };
 
-// fetch all chats of logged in user
+// fetch all chats (group and one-to-one chats) of logged in user
 
 const fetchChats = (async (req, res) => {
     try {
