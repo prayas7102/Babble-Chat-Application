@@ -4,7 +4,7 @@
   "description": "",
   "main": "Backend/server.js",
   "scripts": {
-    "start": "nodemon Backend/server.js",
+    "start": "nodemon Backend/server.js --max-old-space-size=4096",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm start\" \"npm run client\""
   },

@@ -28,11 +28,12 @@ import { Avatar } from "@chakra-ui/avatar";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
 import ChatLoading from './ChatLoading';
+import UserDisplay from "../UserDisplay/UserDisplay";
 import ProfileModal from './ProfileModal';
 
 const SideDrawer = () => {
 
-  const {user} = ChatState();
+  const { user, chats, setSelectedChat } = ChatState();
   let navigate = useNavigate();
 
   const toast = useToast()
@@ -57,7 +58,15 @@ const SideDrawer = () => {
     try {
       setLoading(true);
 
+      // token are used for saving user's login sesssion details
+      // the bearer token is added in postman automatically gets added
+      // as a part of user schema with name email and pic.
+      // so we can send request from frontend (below) by ensuring complete authourization
+
+      // console.log(user)
+
       const config = {
+
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -71,6 +80,39 @@ const SideDrawer = () => {
       toast({
         title: "Error Occured!",
         description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
+
+  const accessChat = async (userId) => {
+    console.log(userId);
+
+    try {
+      setLoadingChat(true);
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      
+      const { data } = await axios.post(`/api/chat`, { userId }, config);
+
+      // if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+
+      setSelectedChat(data);
+      setLoadingChat(false);
+      onClose();
+    } 
+    catch (error) {
+      toast({
+        title: "Error fetching the chat",
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -104,33 +146,33 @@ const SideDrawer = () => {
             </Button>
           </Tooltip>
 
-          <Spacer/>
+          <Spacer />
 
           <Text fontSize="2xl" fontFamily="Work sans">
-            Talk-A-Tive
+            Babble
           </Text>
 
-          <Spacer/>
+          <Spacer />
 
-        <div>
-          <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              <Avatar
-                size="sm"
-                cursor="pointer"
-                name={user.name}
-                src={user.pic}
-              />
-            </MenuButton>
-            <MenuList>
-              <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>
-              </ProfileModal>
-              <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-            </MenuList>
-          </Menu>
-        </div>
+          <div>
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                <Avatar
+                  size="sm"
+                  cursor="pointer"
+                  name={user.name}
+                  src={user.pic}
+                />
+              </MenuButton>
+              <MenuList>
+                <ProfileModal user={user}>
+                  <MenuItem>My Profile</MenuItem>
+                </ProfileModal>
+                <MenuDivider />
+                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
 
         </Flex>
 
@@ -156,7 +198,7 @@ const SideDrawer = () => {
               <ChatLoading />
             ) : (
               searchResult?.map((user) => (
-                <UserListItem
+                <UserDisplay
                   key={user._id}
                   user={user}
                   handleFunction={() => accessChat(user._id)}
@@ -165,7 +207,7 @@ const SideDrawer = () => {
             )}
 
             {loadingChat && <Spinner ml="auto" d="flex" />}
-            
+
           </DrawerBody>
         </DrawerContent>
       </Drawer>
