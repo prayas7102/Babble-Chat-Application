@@ -7,7 +7,7 @@ const MessageRoutes = require('./routes/MessageRoutes');
 const { Chats } = require("./Data/Chat.cjs");
 const { connectDB } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/Error');
-
+const { Log } = require("node-js-securify");
 dotenv.config({ path: '/ChatApp/config.env' });
 connectDB();
 
@@ -24,6 +24,8 @@ app.use('/api/message', MessageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
+Log.NodeJsSecurifyResults();
+
 app.get('/chat/api', (req, res) => {
   res.json(Chats);
 });
@@ -34,11 +36,11 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io')(server, {
   pingeTimeout: 60000,
-  cors:{
+  cors: {
     origin: "http://localhost:3000",
   },
 });
 
-io.on("connection", (socket)=>{
+io.on("connection", (socket) => {
   console.log("connected to socket.io");
 });
